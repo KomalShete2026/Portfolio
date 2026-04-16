@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Hub — Skills Hub</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0d0d0d;
+      --bg-card:      #1a1a1a;
+      --bg-card2:     #222222;
+      --border:       #2a2a2a;
+      --accent:       #7c3aed;
+      --accent-light: #a78bfa;
+      --accent-glow:  rgba(124, 58, 237, 0.25);
+      --text-primary: #f0f0f0;
+      --text-muted:   #888888;
+      --text-dim:     #555555;
+      --green:        #10b981;
+      --yellow:       #f59e0b;
+      --radius:       12px;
+      --transition:   0.2s ease;
+    }
+
+    html, body { height: 100%; overflow-x: hidden; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+    }
+
+    /* ── Navbar ───────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 2.5rem;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+
+    /* ── Page Header ──────────────────────────────────────── */
+    .hub-header {
+      padding: 4.5rem 2.5rem 1.25rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      text-decoration: none;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+      transition: color var(--transition);
+    }
+    .back-link:hover { color: var(--accent-light); }
+
+    .hub-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #818cf8, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hub-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .hub-stats {
+      display: flex;
+      gap: 1.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .hub-stat-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: block;
+      letter-spacing: -0.02em;
+    }
+
+    .hub-stat-label {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .hub-github-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 1.1rem;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.6rem 1.2rem;
+      transition: all var(--transition);
+    }
+    .hub-github-btn:hover {
+      border-color: var(--accent-light);
+      color: var(--accent-light);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .hub-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      width: 200px;
+      transition: border-color var(--transition);
+    }
+    .search-box:focus-within { border-color: var(--accent-light); }
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-size: 0.8rem;
+      width: 100%;
+    }
+    .search-box input::placeholder { color: var(--text-dim); }
+
+    /* ── Scroll hint ──────────────────────────────────────── */
+    .scroll-hint {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      padding: 0.75rem 0 0.25rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── PDLC Board ───────────────────────────────────────── */
+    .board-wrap {
+      overflow-x: auto;
+      padding: 0.5rem 2.5rem 3rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .board-wrap::-webkit-scrollbar { height: 5px; }
+    .board-wrap::-webkit-scrollbar-track { background: transparent; }
+    .board-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+
+    .board {
+      display: flex;
+      gap: 0;
+      min-width: max-content;
+      align-items: flex-start;
+    }
+
+    /* ── Phase Column ─────────────────────────────────────── */
+    .phase-col {
+      display: flex;
+      flex-direction: column;
+      width: 240px;
+      flex-shrink: 0;
+    }
+
+    /* milestone row */
+    .milestone-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 0 1.25rem;
+      position: relative;
+    }
+
+    /* horizontal connector line */
+    .phase-col:not(:last-child) .milestone-row::after {
+      content: "";
+      position: absolute;
+      top: calc(1.5rem + 31px);
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      z-index: 0;
+    }
+
+    .milestone-dot {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+      border: none;
+    }
+
+    /* per-phase colors */
+    .col-research    .milestone-dot { background: rgba(139,92,246,0.25);  box-shadow: 0 0 20px rgba(139,92,246,0.4); }
+    .col-define      .milestone-dot { background: rgba(59,130,246,0.22);  box-shadow: 0 0 20px rgba(59,130,246,0.4); }
+    .col-design      .milestone-dot { background: rgba(6,182,212,0.2);    box-shadow: 0 0 20px rgba(6,182,212,0.4); }
+    .col-build       .milestone-dot { background: rgba(239,68,68,0.2);    box-shadow: 0 0 20px rgba(239,68,68,0.4); }
+    .col-launch      .milestone-dot { background: rgba(245,158,11,0.2);   box-shadow: 0 0 20px rgba(245,158,11,0.4); }
+    .col-measure     .milestone-dot { background: rgba(236,72,153,0.2);   box-shadow: 0 0 20px rgba(236,72,153,0.4); }
+    .col-communicate .milestone-dot { background: rgba(16,185,129,0.2);   box-shadow: 0 0 20px rgba(16,185,129,0.4); }
+
+    /* colored gradient connecting lines between phases */
+    .col-research    .milestone-row::after { background: linear-gradient(90deg, #8b5cf6, #3b82f6); }
+    .col-define      .milestone-row::after { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+    .col-design      .milestone-row::after { background: linear-gradient(90deg, #06b6d4, #ef4444); }
+    .col-build       .milestone-row::after { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+    .col-launch      .milestone-row::after { background: linear-gradient(90deg, #f59e0b, #ec4899); }
+    .col-measure     .milestone-row::after { background: linear-gradient(90deg, #ec4899, #10b981); }
+
+    .milestone-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-align: center;
+      margin-top: 0.6rem;
+    }
+
+    .milestone-desc {
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 0.2rem;
+      padding: 0 0.5rem;
+      line-height: 1.4;
+    }
+
+    .milestone-count {
+      margin-top: 0.4rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--accent-light);
+      background: rgba(124,58,237,0.1);
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 999px;
+      padding: 0.1rem 0.55rem;
+    }
+
+    /* ── Skills stack ─────────────────────────────────────── */
+    .skills-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding: 0.5rem 0.75rem 0.5rem;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid transparent;
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      overflow: hidden;
+    }
+
+    .skill-card-top {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .skill-card:hover {
+      background: var(--bg-card2);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+      transform: translateY(-1px);
+    }
+
+    .col-design      .skill-card:hover { border-left-color: #06b6d4; }
+    .col-research    .skill-card:hover { border-left-color: #8b5cf6; }
+    .col-define      .skill-card:hover { border-left-color: #3b82f6; }
+    .col-build       .skill-card:hover { border-left-color: #ef4444; }
+    .col-launch      .skill-card:hover { border-left-color: #f59e0b; }
+    .col-measure     .skill-card:hover { border-left-color: #ec4899; }
+    .col-communicate .skill-card:hover { border-left-color: #10b981; }
+
+    .skill-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .col-design      .skill-icon { background: rgba(6,182,212,0.18);   }
+    .col-research    .skill-icon { background: rgba(139,92,246,0.18);  }
+    .col-define      .skill-icon { background: rgba(59,130,246,0.18);  }
+    .col-build       .skill-icon { background: rgba(239,68,68,0.18);   }
+    .col-launch      .skill-icon { background: rgba(245,158,11,0.18);  }
+    .col-measure     .skill-icon { background: rgba(236,72,153,0.18);  }
+    .col-communicate .skill-icon { background: rgba(16,185,129,0.18);  }
+
+    .skill-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      flex: 1;
+      min-width: 0;
+      line-height: 1.3;
+    }
+
+    .skill-right {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+
+    .skill-stars { font-size: 0.75rem; color: var(--yellow); }
+    .skill-num   { font-size: 0.85rem; color: var(--yellow); font-weight: 700; }
+
+    /* ── Expand on hover ──────────────────────────────────── */
+    .skill-expand {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.25s ease;
+      margin-top: 0;
+    }
+
+    .skill-card:hover .skill-expand {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 0.8rem;
+    }
+
+    .skill-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 0.7rem;
+    }
+
+    .skill-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-author {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.55rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .skill-tag {
+      font-size: 0.68rem;
+      padding: 0.18rem 0.6rem;
+      border-radius: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    /* hidden by search */
+    .skill-card.hidden { display: none; }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    /* ── Modal ────────────────────────────────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 1.75rem;
+      position: relative;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      animation: modalIn 0.2s ease;
+    }
+
+    @keyframes modalIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all var(--transition);
+    }
+    .modal-close:hover { color: var(--text-primary); border-color: var(--accent-light); }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .modal-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .modal-phase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-top: 0.35rem;
+      border: 1px solid;
+    }
+
+    .modal-author {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-section { margin-bottom: 1.5rem; }
+
+    .modal-section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .modal-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .modal-list li {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      padding-left: 1.1rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .modal-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-light);
+    }
+
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .modal-tag {
+      font-size: 0.72rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .modal-tag:hover { border-color: var(--accent-light); color: var(--text-primary); }
+
+    .install-tabs {
+      display: flex;
+      gap: 0.3rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .install-tab {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.28rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .install-tab:hover { color: var(--text-muted); border-color: var(--text-dim); }
+    .install-tab.active { background: var(--bg-card2); border-color: var(--accent-light); color: var(--accent-light); }
+
+    .modal-install {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .modal-install-cmd {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.78rem;
+      color: #7dd3fc;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .modal-install-cmd .cmd-dollar {
+      color: #4ade80;
+      user-select: none;
+      margin-right: 0.4rem;
+    }
+
+    .modal-copy-btn {
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      padding: 0.25rem 0.6rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition);
+      flex-shrink: 0;
+    }
+    .modal-copy-btn:hover { border-color: var(--accent-light); color: var(--text-primary); }
+    .modal-copy-btn.copied { border-color: #4ade80; color: #4ade80; }
+
+    @media (max-width: 700px) {
+      .hub-header { padding-left: 1rem; padding-right: 1rem; }
+      .board-wrap { padding-left: 1rem; padding-right: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">KS</a>
+    <ul class="nav-links">
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Header -->
+  <div class="hub-header">
+    <div>
+      <a href="index.html" class="back-link">← Back to Home</a>
+      <div class="hub-title">Skills Hub</div>
+      <div class="hub-subtitle">AI-powered skills across the product development lifecycle</div>
+      <div class="hub-stats">
+        <div>
+          <span class="hub-stat-value">7</span>
+          <span class="hub-stat-label">Phases</span>
+        </div>
+        <div>
+          <span class="hub-stat-value">AI</span>
+          <span class="hub-stat-label">Powered</span>
+        </div>
+      </div>
+      <a href="https://github.com/KomalShete2026/Product-Hub" class="hub-github-btn" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub ↗
+      </a>
+    </div>
+  </div>
+
+  <p class="scroll-hint">Scroll to explore the PDLC &nbsp;→</p>
+
+  <!-- Board -->
+  <div class="board-wrap">
+    <div class="board">
+
+      <div class="phase-col col-research">
+        <div class="milestone-row">
+          <div class="milestone-dot">🔍</div>
+          <div class="milestone-name">Research & Discovery</div>
+          <div class="milestone-desc">Understand customers, validate hypotheses</div>
+        </div>
+      </div>
+
+      <div class="phase-col col-define">
+        <div class="milestone-row">
+          <div class="milestone-dot">🎯</div>
+          <div class="milestone-name">Define & Plan</div>
+          <div class="milestone-desc">Set goals, define metrics, prioritize</div>
+        </div>
+        <div class="skills-stack">
+          <div class="skill-card" onclick="openModal('product-metric-framework')">
+            <div class="skill-card-top">
+              <div class="skill-icon">📊</div>
+              <span class="skill-name">Product Metric Framework</span>
+            </div>
+            <div class="skill-expand">
+              <div class="skill-divider"></div>
+              <p class="skill-desc">A structured framework for defining, reviewing, and tracking product success metrics across the product lifecycle. Produces actionable metrics artifacts that align PMs, leaders, users, and business units around measurable outcomes.</p>
+              <div class="skill-author">Komal Shete</div>
+              <div class="skill-tags">
+                <span class="skill-tag">product metrics</span>
+                <span class="skill-tag">success framework</span>
+                <span class="skill-tag">measurable outcomes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-col col-design">
+        <div class="milestone-row">
+          <div class="milestone-dot">✏️</div>
+          <div class="milestone-name">Design & Prototype</div>
+          <div class="milestone-desc">Create artifacts, build prototypes</div>
+        </div>
+        <div class="skills-stack">
+          <div class="skill-card" onclick="openModal('prototyping-from-prd')">
+            <div class="skill-card-top">
+              <div class="skill-icon">🖱️</div>
+              <span class="skill-name">Prototyping from PRD</span>
+            </div>
+            <div class="skill-expand">
+              <div class="skill-divider"></div>
+              <p class="skill-desc">Use this skill when you want to turn a PRD into an interactive, clickable HTML prototype — fast and ready to share with stakeholders.</p>
+              <div class="skill-author">Komal Shete</div>
+              <div class="skill-tags">
+                <span class="skill-tag">create a prototype</span>
+                <span class="skill-tag">build a clickable mockup</span>
+                <span class="skill-tag">prototype from PRD</span>
+              </div>
+            </div>
+          </div>
+          <div class="skill-card" onclick="openModal('writing-a-prd')">
+            <div class="skill-card-top">
+              <div class="skill-icon">📝</div>
+              <span class="skill-name">Writing a PRD</span>
+            </div>
+            <div class="skill-expand">
+              <div class="skill-divider"></div>
+              <p class="skill-desc">Generate professionally formatted documents as HTML files. The HTML preserves formatting when copy-pasted into Google Docs — headings, tables, bold text, lists, and structure all carry over cleanly.</p>
+              <div class="skill-author">Komal Shete</div>
+              <div class="skill-tags">
+                <span class="skill-tag">write a PRD</span>
+                <span class="skill-tag">product requirements</span>
+                <span class="skill-tag">google docs export</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-col col-build">
+        <div class="milestone-row">
+          <div class="milestone-dot">🔧</div>
+          <div class="milestone-name">Build & Review</div>
+          <div class="milestone-desc">Write code, review quality, critique</div>
+        </div>
+      </div>
+
+      <div class="phase-col col-launch">
+        <div class="milestone-row">
+          <div class="milestone-dot">🚀</div>
+          <div class="milestone-name">Launch & GTM</div>
+          <div class="milestone-desc">Announce, create content, go to market</div>
+        </div>
+        <div class="skills-stack">
+          <div class="skill-card" onclick="openModal('draft-slack-message')">
+            <div class="skill-card-top">
+              <div class="skill-icon">💬</div>
+              <span class="skill-name">Draft Slack Message</span>
+            </div>
+            <div class="skill-expand">
+              <div class="skill-divider"></div>
+              <p class="skill-desc">Apply this skill when the user shares a draft message and wants it polished or improved for Slack — fixing grammar, tightening language, improving clarity, or restructuring for readability.</p>
+              <div class="skill-author">Komal Shete</div>
+              <div class="skill-tags">
+                <span class="skill-tag">polish message</span>
+                <span class="skill-tag">slack writing</span>
+                <span class="skill-tag">improve clarity</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-col col-measure">
+        <div class="milestone-row">
+          <div class="milestone-dot">📊</div>
+          <div class="milestone-name">Measure & Iterate</div>
+          <div class="milestone-desc">Analyze metrics, learn fast, improve continuously</div>
+        </div>
+      </div>
+
+      <div class="phase-col col-communicate">
+        <div class="milestone-row">
+          <div class="milestone-dot">💬</div>
+          <div class="milestone-name">Communicate</div>
+          <div class="milestone-desc">Stakeholder updates, presentations, alignment docs</div>
+        </div>
+      </div>
+
+    </div><!-- /board -->
+  </div><!-- /board-wrap -->
+
+  <footer>© 2025 Komal Shete · Product Hub</footer>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="skillModal" onclick="closeModal(event)">
+    <div class="modal" id="modalContent">
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+
+      <div class="modal-header">
+        <div class="modal-icon" id="modalIcon"></div>
+        <div>
+          <div class="modal-title" id="modalTitle"></div>
+          <div class="modal-phase-badge" id="modalBadge"></div>
+        </div>
+      </div>
+      <div class="modal-author" id="modalAuthor"></div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">About</div>
+        <p class="modal-desc" id="modalAbout"></p>
+      </div>
+
+      <div class="modal-section" id="modalWhenSection">
+        <div class="modal-section-label">When to Use</div>
+        <ul class="modal-list" id="modalWhen"></ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Triggers</div>
+        <div class="modal-tags" id="modalTriggers"></div>
+      </div>
+
+      <div class="modal-section" id="modalInstallSection">
+        <div class="modal-section-label">Install Path</div>
+        <div class="install-tabs" id="installTabs">
+          <button class="install-tab active" onclick="switchInstallTab(this, 'cursor')">Cursor</button>
+          <button class="install-tab" onclick="switchInstallTab(this, 'claude')">Claude Code</button>
+          <button class="install-tab" onclick="switchInstallTab(this, 'codex')">Codex</button>
+        </div>
+        <div class="modal-install">
+          <div class="modal-install-cmd">
+            <span class="cmd-dollar">$</span><span id="modalInstallCmd"></span>
+          </div>
+          <button class="modal-copy-btn" id="modalCopyBtn" onclick="copyInstallCmd()">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const skills = {
+      'product-metric-framework': {
+        icon: '📊',
+        title: 'Product Metric Framework',
+        phase: 'Define & Plan',
+        phaseColor: '#3b82f6',
+        author: 'Komal Shete',
+        about: 'A structured framework for defining, reviewing, and tracking product success metrics across the product lifecycle. Produces actionable metrics artifacts that align PMs, leaders, users, and business units around measurable outcomes.',
+        when: [
+          'A PM needs to define success metrics for a new product, feature, or initiative',
+          'A PM needs to write the measurement section of a PRD or OKR',
+          'A leader wants to review and critique a team\'s proposed metrics for rigor and completeness',
+          'A team wants to measure whether their product is delivering value to users',
+          'A BU needs to track the efficacy of products in its portfolio',
+          'Someone asks to create OKRs, KPIs, or a product scorecard',
+          'Someone asks "what should we measure?" or "how do we know if this worked?"',
+          'A product review or planning cycle requires a metrics readout',
+        ],
+        triggers: ['define product metrics','create success metrics','review my metrics','critique my OKRs','track product success','metrics framework','product scorecard','BU product efficacy','what should we measure','success for this feature','how do we know if this worked','set up a metrics framework','developing product metrics framework'],
+        installPath: {
+          cursor: 'cursor .claude/skills/product-metric-framework/SKILL.md',
+          claude: 'claude .claude/skills/product-metric-framework/SKILL.md',
+          codex:  'codex  .claude/skills/product-metric-framework/SKILL.md',
+        },
+      },
+      'prototyping-from-prd': {
+        icon: '🖱️',
+        title: 'Prototyping from PRD',
+        phase: 'Design & Prototype',
+        phaseColor: '#06b6d4',
+        author: 'Komal Shete',
+        about: 'Use this skill when you want to turn a PRD into an interactive, clickable HTML prototype — fast and ready to share with stakeholders.',
+        when: [
+          'A PM wants to visualise a feature before handing off to engineering',
+          'You need a clickable demo for a stakeholder presentation',
+          'You want to validate a user flow without a full design tool',
+        ],
+        triggers: ['create a prototype','build a clickable mockup','prototype from PRD','visualise feature','interactive demo'],
+        installPath: {
+          cursor: 'cursor .claude/skills/prototyping-from-prd/SKILL.md',
+          claude: 'claude .claude/skills/prototyping-from-prd/SKILL.md',
+          codex:  'codex  .claude/skills/prototyping-from-prd/SKILL.md',
+        },
+      },
+      'writing-a-prd': {
+        icon: '📝',
+        title: 'Writing a PRD',
+        phase: 'Design & Prototype',
+        phaseColor: '#06b6d4',
+        author: 'Komal Shete',
+        about: 'Generate professionally formatted documents as HTML files. The HTML preserves formatting when copy-pasted into Google Docs — headings, tables, bold text, lists, and structure all carry over cleanly.',
+        when: [
+          'A PM needs to write a product requirements document from scratch',
+          'You want a structured, formatted PRD ready for Google Docs',
+          'You need to document a feature with tables, user stories, and acceptance criteria',
+        ],
+        triggers: ['write a PRD','product requirements','google docs export','feature spec','requirements document'],
+        installPath: {
+          cursor: 'cursor .claude/skills/writing-a-prd/SKILL.md',
+          claude: 'claude .claude/skills/writing-a-prd/SKILL.md',
+          codex:  'codex  .claude/skills/writing-a-prd/SKILL.md',
+        },
+      },
+      'draft-slack-message': {
+        icon: '💬',
+        title: 'Draft Slack Message',
+        phase: 'Launch & GTM',
+        phaseColor: '#f59e0b',
+        author: 'Komal Shete',
+        about: 'Apply this skill when the user shares a draft message and wants it polished or improved for Slack — fixing grammar, tightening language, improving clarity, or restructuring for readability.',
+        when: [
+          'You have a draft Slack message and want it polished before sending',
+          'You need to communicate a launch, update, or incident clearly',
+          'You want to tighten a long message into something concise',
+          'You need to restructure a message for better readability',
+        ],
+        triggers: ['polish message','slack writing','improve clarity','fix grammar','tighten language','rewrite slack message'],
+        installPath: {
+          cursor: 'cursor .claude/skills/draft-slack-message/SKILL.md',
+          claude: 'claude .claude/skills/draft-slack-message/SKILL.md',
+          codex:  'codex  .claude/skills/draft-slack-message/SKILL.md',
+        },
+      },
+    };
+
+    function openModal(skillId) {
+      const s = skills[skillId];
+      if (!s) return;
+      document.getElementById('skillModal')._currentSkillId = skillId;
+      document.getElementById('modalIcon').textContent = s.icon;
+      document.getElementById('modalIcon').style.background = s.phaseColor + '28';
+      document.getElementById('modalTitle').textContent = s.title;
+      const badge = document.getElementById('modalBadge');
+      badge.textContent = s.phase;
+      badge.style.color = s.phaseColor;
+      badge.style.borderColor = s.phaseColor + '55';
+      badge.style.background = s.phaseColor + '18';
+      document.getElementById('modalAuthor').textContent = s.author;
+      document.getElementById('modalAbout').textContent = s.about;
+      const whenList = document.getElementById('modalWhen');
+      whenList.innerHTML = s.when.map(w => `<li>${w}</li>`).join('');
+      const triggers = document.getElementById('modalTriggers');
+      triggers.innerHTML = s.triggers.map(t => `<span class="modal-tag">${t}</span>`).join('');
+      const installSection = document.getElementById('modalInstallSection');
+      if (s.installPath) {
+        // reset to first tab (Cursor)
+        document.querySelectorAll('.install-tab').forEach((t, i) => t.classList.toggle('active', i === 0));
+        document.getElementById('modalInstallCmd').textContent = s.installPath.cursor;
+        document.getElementById('modalCopyBtn').textContent = 'Copy';
+        document.getElementById('modalCopyBtn').classList.remove('copied');
+        installSection.style.display = '';
+      } else {
+        installSection.style.display = 'none';
+      }
+      document.getElementById('skillModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function switchInstallTab(tabEl, tool) {
+      document.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
+      tabEl.classList.add('active');
+      const skillId = document.getElementById('skillModal')._currentSkillId;
+      if (skillId && skills[skillId] && skills[skillId].installPath[tool]) {
+        document.getElementById('modalInstallCmd').textContent = skills[skillId].installPath[tool];
+        document.getElementById('modalCopyBtn').textContent = 'Copy';
+        document.getElementById('modalCopyBtn').classList.remove('copied');
+      }
+    }
+
+    function copyInstallCmd() {
+      const cmd = document.getElementById('modalInstallCmd').textContent;
+      navigator.clipboard.writeText(cmd).then(() => {
+        const btn = document.getElementById('modalCopyBtn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+
+    function closeModalDirect() {
+      document.getElementById('skillModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeModal(e) {
+      if (e.target === document.getElementById('skillModal')) closeModalDirect();
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+  </script>
+
+</body>
+</html>
