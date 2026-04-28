@@ -202,7 +202,7 @@
     .phase-col {
       display: flex;
       flex-direction: column;
-      width: 240px;
+      width: 340px;
       flex-shrink: 0;
     }
 
@@ -240,13 +240,13 @@
     }
 
     /* per-phase colors */
-    .col-research    .milestone-dot { background: rgba(139,92,246,0.25);  box-shadow: 0 0 20px rgba(139,92,246,0.4); }
-    .col-define      .milestone-dot { background: rgba(59,130,246,0.22);  box-shadow: 0 0 20px rgba(59,130,246,0.4); }
-    .col-design      .milestone-dot { background: rgba(6,182,212,0.2);    box-shadow: 0 0 20px rgba(6,182,212,0.4); }
-    .col-build       .milestone-dot { background: rgba(239,68,68,0.2);    box-shadow: 0 0 20px rgba(239,68,68,0.4); }
-    .col-launch      .milestone-dot { background: rgba(245,158,11,0.2);   box-shadow: 0 0 20px rgba(245,158,11,0.4); }
-    .col-measure     .milestone-dot { background: rgba(236,72,153,0.2);   box-shadow: 0 0 20px rgba(236,72,153,0.4); }
-    .col-communicate .milestone-dot { background: rgba(16,185,129,0.2);   box-shadow: 0 0 20px rgba(16,185,129,0.4); }
+    .col-research    .milestone-dot { background: rgba(139,92,246,0.25);  border: 2px solid rgba(139,92,246,0.7);  box-shadow: 0 0 20px rgba(139,92,246,0.4); }
+    .col-define      .milestone-dot { background: rgba(59,130,246,0.22);  border: 2px solid rgba(59,130,246,0.7);  box-shadow: 0 0 20px rgba(59,130,246,0.4); }
+    .col-design      .milestone-dot { background: rgba(6,182,212,0.2);    border: 2px solid rgba(6,182,212,0.7);   box-shadow: 0 0 20px rgba(6,182,212,0.4); }
+    .col-build       .milestone-dot { background: rgba(239,68,68,0.2);    border: 2px solid rgba(239,68,68,0.7);   box-shadow: 0 0 20px rgba(239,68,68,0.4); }
+    .col-launch      .milestone-dot { background: rgba(245,158,11,0.2);   border: 2px solid rgba(245,158,11,0.7);  box-shadow: 0 0 20px rgba(245,158,11,0.4); }
+    .col-measure     .milestone-dot { background: rgba(236,72,153,0.2);   border: 2px solid rgba(236,72,153,0.7);  box-shadow: 0 0 20px rgba(236,72,153,0.4); }
+    .col-communicate .milestone-dot { background: rgba(16,185,129,0.2);   border: 2px solid rgba(16,185,129,0.7);  box-shadow: 0 0 20px rgba(16,185,129,0.4); }
 
     /* colored gradient connecting lines between phases */
     .col-research    .milestone-row::after { background: linear-gradient(90deg, #8b5cf6, #3b82f6); }
@@ -277,19 +277,25 @@
       margin-top: 0.4rem;
       font-size: 0.65rem;
       font-weight: 600;
-      color: var(--accent-light);
-      background: rgba(124,58,237,0.1);
-      border: 1px solid rgba(124,58,237,0.2);
       border-radius: 999px;
-      padding: 0.1rem 0.55rem;
+      padding: 0.15rem 0.65rem;
+      border: 1px solid;
     }
+
+    .col-research    .milestone-count { color: #a78bfa; background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.3); }
+    .col-define      .milestone-count { color: #93c5fd; background: rgba(59,130,246,0.15);  border-color: rgba(59,130,246,0.3); }
+    .col-design      .milestone-count { color: #67e8f9; background: rgba(6,182,212,0.15);   border-color: rgba(6,182,212,0.3); }
+    .col-build       .milestone-count { color: #fca5a5; background: rgba(239,68,68,0.15);   border-color: rgba(239,68,68,0.3); }
+    .col-launch      .milestone-count { color: #fcd34d; background: rgba(245,158,11,0.15);  border-color: rgba(245,158,11,0.3); }
+    .col-measure     .milestone-count { color: #f9a8d4; background: rgba(236,72,153,0.15);  border-color: rgba(236,72,153,0.3); }
+    .col-communicate .milestone-count { color: #6ee7b7; background: rgba(16,185,129,0.15);  border-color: rgba(16,185,129,0.3); }
 
     /* ── Skills stack ─────────────────────────────────────── */
     .skills-stack {
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
-      padding: 0.5rem 0.75rem 0.5rem;
+      padding: 0 1rem 1rem;
     }
 
     .skill-card {
@@ -297,12 +303,13 @@
       border: 1px solid var(--border);
       border-left: 3px solid transparent;
       border-radius: var(--radius);
-      padding: 0.85rem 1rem;
+      padding: 0.9rem 1rem;
       display: flex;
       flex-direction: column;
       cursor: pointer;
       transition: all 0.25s ease;
       overflow: hidden;
+      width: 100%;
     }
 
     .skill-card-top {
@@ -326,22 +333,23 @@
     .col-communicate .skill-card:hover { border-left-color: #10b981; }
 
     .skill-icon {
-      width: 44px; height: 44px;
-      border-radius: 10px;
+      width: 52px; height: 52px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       flex-shrink: 0;
+      border: 1px solid transparent;
     }
 
-    .col-design      .skill-icon { background: rgba(6,182,212,0.18);   }
-    .col-research    .skill-icon { background: rgba(139,92,246,0.18);  }
-    .col-define      .skill-icon { background: rgba(59,130,246,0.18);  }
-    .col-build       .skill-icon { background: rgba(239,68,68,0.18);   }
-    .col-launch      .skill-icon { background: rgba(245,158,11,0.18);  }
-    .col-measure     .skill-icon { background: rgba(236,72,153,0.18);  }
-    .col-communicate .skill-icon { background: rgba(16,185,129,0.18);  }
+    .col-design      .skill-icon { background: rgba(6,182,212,0.22);   border-color: rgba(6,182,212,0.3); }
+    .col-research    .skill-icon { background: rgba(139,92,246,0.25);  border-color: rgba(139,92,246,0.35); }
+    .col-define      .skill-icon { background: rgba(59,130,246,0.22);  border-color: rgba(59,130,246,0.3); }
+    .col-build       .skill-icon { background: rgba(239,68,68,0.22);   border-color: rgba(239,68,68,0.3); }
+    .col-launch      .skill-icon { background: rgba(245,158,11,0.22);  border-color: rgba(245,158,11,0.3); }
+    .col-measure     .skill-icon { background: rgba(236,72,153,0.22);  border-color: rgba(236,72,153,0.3); }
+    .col-communicate .skill-icon { background: rgba(16,185,129,0.22);  border-color: rgba(16,185,129,0.3); }
 
     .skill-name {
       font-size: 0.88rem;
@@ -599,7 +607,7 @@
       border-radius: 10px;
       padding: 0.9rem 1rem;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 0.75rem;
     }
@@ -608,9 +616,12 @@
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
       font-size: 0.78rem;
       color: #7dd3fc;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      text-align: left;
+      flex: 1;
+      min-width: 0;
     }
 
     .modal-install-cmd .cmd-dollar {
@@ -685,6 +696,25 @@
           <div class="milestone-dot">🔍</div>
           <div class="milestone-name">Research & Discovery</div>
           <div class="milestone-desc">Understand customers, validate hypotheses</div>
+          <div class="milestone-count">1 skill</div>
+        </div>
+        <div class="skills-stack">
+          <div class="skill-card" onclick="openModal('user-interview-synthesizer')">
+            <div class="skill-card-top">
+              <div class="skill-icon">🎙️</div>
+              <span class="skill-name">User Interview Synthesizer</span>
+            </div>
+            <div class="skill-expand">
+              <div class="skill-divider"></div>
+              <p class="skill-desc">Transform raw user research data into structured Follow-Me-Home Insights reports using Teresa Torres' Continuous Discovery Habits framework.</p>
+
+              <div class="skill-tags">
+                <span class="skill-tag">user research</span>
+                <span class="skill-tag">FMH insights</span>
+                <span class="skill-tag">opportunity mapping</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -693,6 +723,7 @@
           <div class="milestone-dot">🎯</div>
           <div class="milestone-name">Define & Plan</div>
           <div class="milestone-desc">Set goals, define metrics, prioritize</div>
+          <div class="milestone-count">2 skills</div>
         </div>
         <div class="skills-stack">
           <div class="skill-card" onclick="openModal('product-metric-framework')">
@@ -703,11 +734,27 @@
             <div class="skill-expand">
               <div class="skill-divider"></div>
               <p class="skill-desc">A structured framework for defining, reviewing, and tracking product success metrics across the product lifecycle. Produces actionable metrics artifacts that align PMs, leaders, users, and business units around measurable outcomes.</p>
-              <div class="skill-author">Komal Shete</div>
+
               <div class="skill-tags">
                 <span class="skill-tag">product metrics</span>
                 <span class="skill-tag">success framework</span>
                 <span class="skill-tag">measurable outcomes</span>
+              </div>
+            </div>
+          </div>
+          <div class="skill-card" onclick="openModal('roadmap-prioritization')">
+            <div class="skill-card-top">
+              <div class="skill-icon">🗺️</div>
+              <span class="skill-name">Roadmap Prioritization</span>
+            </div>
+            <div class="skill-expand">
+              <div class="skill-divider"></div>
+              <p class="skill-desc">Surface real constraints, expose hidden assumptions, and produce a prioritized list the PM can stand behind in a room full of skeptics.</p>
+
+              <div class="skill-tags">
+                <span class="skill-tag">prioritization</span>
+                <span class="skill-tag">roadmap sequencing</span>
+                <span class="skill-tag">stakeholder rationale</span>
               </div>
             </div>
           </div>
@@ -719,6 +766,7 @@
           <div class="milestone-dot">✏️</div>
           <div class="milestone-name">Design & Prototype</div>
           <div class="milestone-desc">Create artifacts, build prototypes</div>
+          <div class="milestone-count">2 skills</div>
         </div>
         <div class="skills-stack">
           <div class="skill-card" onclick="openModal('prototyping-from-prd')">
@@ -729,7 +777,7 @@
             <div class="skill-expand">
               <div class="skill-divider"></div>
               <p class="skill-desc">Use this skill when you want to turn a PRD into an interactive, clickable HTML prototype — fast and ready to share with stakeholders.</p>
-              <div class="skill-author">Komal Shete</div>
+
               <div class="skill-tags">
                 <span class="skill-tag">create a prototype</span>
                 <span class="skill-tag">build a clickable mockup</span>
@@ -745,7 +793,7 @@
             <div class="skill-expand">
               <div class="skill-divider"></div>
               <p class="skill-desc">Generate professionally formatted documents as HTML files. The HTML preserves formatting when copy-pasted into Google Docs — headings, tables, bold text, lists, and structure all carry over cleanly.</p>
-              <div class="skill-author">Komal Shete</div>
+
               <div class="skill-tags">
                 <span class="skill-tag">write a PRD</span>
                 <span class="skill-tag">product requirements</span>
@@ -761,6 +809,7 @@
           <div class="milestone-dot">🔧</div>
           <div class="milestone-name">Build & Review</div>
           <div class="milestone-desc">Write code, review quality, critique</div>
+          <div class="milestone-count">Coming soon</div>
         </div>
       </div>
 
@@ -769,6 +818,7 @@
           <div class="milestone-dot">🚀</div>
           <div class="milestone-name">Launch & GTM</div>
           <div class="milestone-desc">Announce, create content, go to market</div>
+          <div class="milestone-count">1 skill</div>
         </div>
         <div class="skills-stack">
           <div class="skill-card" onclick="openModal('draft-slack-message')">
@@ -779,7 +829,7 @@
             <div class="skill-expand">
               <div class="skill-divider"></div>
               <p class="skill-desc">Apply this skill when the user shares a draft message and wants it polished or improved for Slack — fixing grammar, tightening language, improving clarity, or restructuring for readability.</p>
-              <div class="skill-author">Komal Shete</div>
+
               <div class="skill-tags">
                 <span class="skill-tag">polish message</span>
                 <span class="skill-tag">slack writing</span>
@@ -795,6 +845,25 @@
           <div class="milestone-dot">📊</div>
           <div class="milestone-name">Measure & Iterate</div>
           <div class="milestone-desc">Analyze metrics, learn fast, improve continuously</div>
+          <div class="milestone-count">1 skill</div>
+        </div>
+        <div class="skills-stack">
+          <div class="skill-card" onclick="openModal('data-storytelling')">
+            <div class="skill-card-top">
+              <div class="skill-icon">📈</div>
+              <span class="skill-name">Data Storytelling</span>
+            </div>
+            <div class="skill-expand">
+              <div class="skill-divider"></div>
+              <p class="skill-desc">Turn data into decisions. Make the so what undeniable — for leadership reviews, experiment reports, and investment asks.</p>
+
+              <div class="skill-tags">
+                <span class="skill-tag">data narrative</span>
+                <span class="skill-tag">business review</span>
+                <span class="skill-tag">experiment results</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -803,6 +872,7 @@
           <div class="milestone-dot">💬</div>
           <div class="milestone-name">Communicate</div>
           <div class="milestone-desc">Stakeholder updates, presentations, alignment docs</div>
+          <div class="milestone-count">Coming soon</div>
         </div>
       </div>
 
@@ -823,8 +893,6 @@
           <div class="modal-phase-badge" id="modalBadge"></div>
         </div>
       </div>
-      <div class="modal-author" id="modalAuthor"></div>
-
       <div class="modal-section">
         <div class="modal-section-label">About</div>
         <p class="modal-desc" id="modalAbout"></p>
@@ -859,12 +927,80 @@
 
   <script>
     const skills = {
+      'user-interview-synthesizer': {
+        icon: '🎙️',
+        title: 'User Interview Synthesizer',
+        phase: 'Research & Discovery',
+        phaseColor: '#8b5cf6',
+
+        about: 'Transform raw user research data (transcripts, FMH notes, Zoom recordings) into structured Follow-Me-Home Insights reports based on Teresa Torres\' Continuous Discovery Habits framework. Surfaces opportunities, pain points, and customer jobs-to-be-done in a stakeholder-ready format.',
+        when: [
+          'You have interview transcripts and want a structured synthesis report',
+          'You\'re writing a Follow-Me-Home (FMH) insights document after field research',
+          'You have Zoom recording notes and need to extract key themes',
+          'You want to map opportunities and pain points from qualitative data',
+          'You need to prepare user research findings for a stakeholder or product review',
+        ],
+        triggers: ['Synthesize this interview transcript', 'Analyze this FMH transcript', 'What are the key opportunities from these notes', 'Generate a Follow-Me-Home Insights report', 'Extract pain points from this research', 'Summarize user interview findings'],
+        installPath: {
+          cursor: 'cursor .claude/skills/synthesizing-user-interviews/SKILL.md',
+          claude: 'claude .claude/skills/synthesizing-user-interviews/SKILL.md',
+          codex:  'codex  .claude/skills/synthesizing-user-interviews/SKILL.md',
+        },
+      },
+      'data-storytelling': {
+        icon: '📈',
+        title: 'Data Storytelling',
+        phase: 'Measure & Iterate',
+        phaseColor: '#ec4899',
+
+        about: 'Help PMs and Designers turn data into decisions. The job is not to make data look good — it is to make the so what undeniable. Asks for raw data or dashboard context before writing anything, then shapes the narrative around insight and action.',
+        when: [
+          'A PM needs to present data results to leadership, skip-level, or C-suite',
+          'A PM needs to write a business review, quarterly readout, or experiment report',
+          'A PM needs to frame a roadmap decision or investment ask with supporting data',
+          'A PM needs to explain why a metric moved (up or down) and what to do about it',
+          'A Designer needs to communicate usability study findings to product partners',
+          'A Designer needs to present research synthesis or design impact metrics',
+          'A Designer needs to build a case for a design direction using quantitative and qualitative data',
+          'A team needs to write the "results" section of a PRD, experiment doc, or post-launch report',
+        ],
+        triggers: ['Help me present these experiment results', 'Write a 1-pager for the business review', 'Explain why our activation rate dropped', 'Make this dashboard data compelling', 'Turn these usability study findings into a presentation', 'frame this data for leadership', 'quarterly metrics readout', 'write my experiment report'],
+        installPath: {
+          cursor: 'cursor .claude/skills/data-storytelling/SKILL.md',
+          claude: 'claude .claude/skills/data-storytelling/SKILL.md',
+          codex:  'codex  .claude/skills/data-storytelling/SKILL.md',
+        },
+      },
+      'roadmap-prioritization': {
+        icon: '🗺️',
+        title: 'Roadmap Prioritization',
+        phase: 'Define & Plan',
+        phaseColor: '#3b82f6',
+
+        about: 'Help PMs make and defend sequencing decisions. The job is not to pick a framework and score items — it is to surface the real constraints, expose hidden assumptions, and produce a prioritized list the PM can stand behind in a room full of skeptics.',
+        when: [
+          'A PM needs to prioritize a backlog or feature list',
+          'A team has too many competing initiatives and needs to sequence them',
+          'A PM needs to choose between strategic bets with limited capacity',
+          'A PM needs to write up prioritization rationale for stakeholders',
+          'A PM faces stakeholder pressure to reorder the roadmap',
+          'A team needs to facilitate a prioritization planning session',
+          'Someone asks "what should we build first?" or "how do I push back on this?"',
+        ],
+        triggers: ['Help me prioritize these feature requests', 'What should we build first', 'Stack rank these initiatives and write up the rationale', 'My VP wants to add this feature', 'We have too many things on the plate — help me prioritize', 'prioritize my backlog', 'roadmap sequencing', 'how do I push back on this'],
+        installPath: {
+          cursor: 'cursor .claude/skills/roadmap-prioritization/SKILL.md',
+          claude: 'claude .claude/skills/roadmap-prioritization/SKILL.md',
+          codex:  'codex  .claude/skills/roadmap-prioritization/SKILL.md',
+        },
+      },
       'product-metric-framework': {
         icon: '📊',
         title: 'Product Metric Framework',
         phase: 'Define & Plan',
         phaseColor: '#3b82f6',
-        author: 'Komal Shete',
+
         about: 'A structured framework for defining, reviewing, and tracking product success metrics across the product lifecycle. Produces actionable metrics artifacts that align PMs, leaders, users, and business units around measurable outcomes.',
         when: [
           'A PM needs to define success metrics for a new product, feature, or initiative',
@@ -878,9 +1014,9 @@
         ],
         triggers: ['define product metrics','create success metrics','review my metrics','critique my OKRs','track product success','metrics framework','product scorecard','BU product efficacy','what should we measure','success for this feature','how do we know if this worked','set up a metrics framework','developing product metrics framework'],
         installPath: {
-          cursor: 'cursor .claude/skills/product-metric-framework/SKILL.md',
-          claude: 'claude .claude/skills/product-metric-framework/SKILL.md',
-          codex:  'codex  .claude/skills/product-metric-framework/SKILL.md',
+          cursor: 'cursor .claude/skills/defining-product-metrics-framework/SKILL.md',
+          claude: 'claude .claude/skills/defining-product-metrics-framework/SKILL.md',
+          codex:  'codex  .claude/skills/defining-product-metrics-framework/SKILL.md',
         },
       },
       'prototyping-from-prd': {
@@ -888,7 +1024,7 @@
         title: 'Prototyping from PRD',
         phase: 'Design & Prototype',
         phaseColor: '#06b6d4',
-        author: 'Komal Shete',
+
         about: 'Use this skill when you want to turn a PRD into an interactive, clickable HTML prototype — fast and ready to share with stakeholders.',
         when: [
           'A PM wants to visualise a feature before handing off to engineering',
@@ -907,7 +1043,7 @@
         title: 'Writing a PRD',
         phase: 'Design & Prototype',
         phaseColor: '#06b6d4',
-        author: 'Komal Shete',
+
         about: 'Generate professionally formatted documents as HTML files. The HTML preserves formatting when copy-pasted into Google Docs — headings, tables, bold text, lists, and structure all carry over cleanly.',
         when: [
           'A PM needs to write a product requirements document from scratch',
@@ -916,9 +1052,9 @@
         ],
         triggers: ['write a PRD','product requirements','google docs export','feature spec','requirements document'],
         installPath: {
-          cursor: 'cursor .claude/skills/writing-a-prd/SKILL.md',
-          claude: 'claude .claude/skills/writing-a-prd/SKILL.md',
-          codex:  'codex  .claude/skills/writing-a-prd/SKILL.md',
+          cursor: 'cursor .claude/skills/creating-formatted-google-docs/SKILL.md',
+          claude: 'claude .claude/skills/creating-formatted-google-docs/SKILL.md',
+          codex:  'codex  .claude/skills/creating-formatted-google-docs/SKILL.md',
         },
       },
       'draft-slack-message': {
@@ -926,7 +1062,7 @@
         title: 'Draft Slack Message',
         phase: 'Launch & GTM',
         phaseColor: '#f59e0b',
-        author: 'Komal Shete',
+
         about: 'Apply this skill when the user shares a draft message and wants it polished or improved for Slack — fixing grammar, tightening language, improving clarity, or restructuring for readability.',
         when: [
           'You have a draft Slack message and want it polished before sending',
@@ -936,9 +1072,9 @@
         ],
         triggers: ['polish message','slack writing','improve clarity','fix grammar','tighten language','rewrite slack message'],
         installPath: {
-          cursor: 'cursor .claude/skills/draft-slack-message/SKILL.md',
-          claude: 'claude .claude/skills/draft-slack-message/SKILL.md',
-          codex:  'codex  .claude/skills/draft-slack-message/SKILL.md',
+          cursor: 'cursor .claude/skills/polish-slack-message/SKILL.md',
+          claude: 'claude .claude/skills/polish-slack-message/SKILL.md',
+          codex:  'codex  .claude/skills/polish-slack-message/SKILL.md',
         },
       },
     };
@@ -955,7 +1091,6 @@
       badge.style.color = s.phaseColor;
       badge.style.borderColor = s.phaseColor + '55';
       badge.style.background = s.phaseColor + '18';
-      document.getElementById('modalAuthor').textContent = s.author;
       document.getElementById('modalAbout').textContent = s.about;
       const whenList = document.getElementById('modalWhen');
       whenList.innerHTML = s.when.map(w => `<li>${w}</li>`).join('');
